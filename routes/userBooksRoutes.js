@@ -3,7 +3,7 @@ const userBooksController = require("../controllers/userBooksController")
 
 const router = express.Router();
 
-router.get("/getReadBooksByUser/:id",userBooksController.getReadBooksByUser)
+router.get("/getReadBooksByUser/:user_id",userBooksController.getReadBooksByUser)
 router.post("/markBookAsRead",userBooksController.markBookAsRead)
 router.delete("/deleteBooks",userBooksController.unmarkBookAsRead)
 

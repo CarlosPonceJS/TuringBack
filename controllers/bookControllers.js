@@ -1,3 +1,6 @@
+const path = require("path");
+const fs = require("fs");
+
 const db = require("../config/db");
 const bookController = {};
 
@@ -8,9 +11,17 @@ bookController.getBooks = (req, res) => {
   });
 };
 
+bookController.getBookById = (req, res) => {
+  const {id} = req.params;
+  db.query('SELECT * FROM books where id = ?',[id], (err, results) => {
+    if (err) return res.status(500).send(err);
+    res.json(results);
+  });
+};
 bookController.postBooks = (req, res) => {
   const { title, author, image } = req.body;
-  const sql = 'INSERT INTO books (title, author) VALUES (?, ?, ?)';
+
+  const sql = 'INSERT INTO books (title, author, image) VALUES (?, ?, ?)';
   db.query(sql, [title, author, image], (err, result) => {
     if (err) return res.status(500).send(err);
     res.send('Book added');

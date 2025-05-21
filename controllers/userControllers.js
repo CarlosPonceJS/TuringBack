@@ -24,9 +24,18 @@ userController.logInUser = (req,res)=>{
         return res.status(200).json({
             message: "Login successful",
             role:results[0].role,
-            token
+            token,
+            user_id: results[0].id
         });
     })
+}
+
+userController.getUserById = (req,res)=>{
+  const {id} = req.params;
+  db.query('SELECT * FROM users where id = ?',[id], (err, results) => {
+    if (err) return res.status(500).send(err);
+    res.json(results);
+  });
 }
 
 userController.getUsers = (req,res)=>{
