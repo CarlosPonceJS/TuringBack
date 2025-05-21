@@ -10,8 +10,5 @@ router.post("/postUsers",userMiddlewares.validateUserData,userController.postUse
 router.put("/putUsers/:id",userController.putUsers)
 router.delete("/deleteUsers/:id",userController.deleteUsers)
 
-
-
-
 module.exports = router;
 
