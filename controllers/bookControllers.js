@@ -9,9 +9,9 @@ bookController.getBooks = (req, res) => {
 };
 
 bookController.postBooks = (req, res) => {
-  const { title, author } = req.body;
-  const sql = 'INSERT INTO books (title, author) VALUES (?, ?)';
-  db.query(sql, [title, author], (err, result) => {
+  const { title, author, image } = req.body;
+  const sql = 'INSERT INTO books (title, author) VALUES (?, ?, ?)';
+  db.query(sql, [title, author, image], (err, result) => {
     if (err) return res.status(500).send(err);
     res.send('Book added');
   });
@@ -19,10 +19,10 @@ bookController.postBooks = (req, res) => {
 
 bookController.putBooks = (req, res) => {
   const { id } = req.params;
-  const { title, author } = req.body;
+  const { title, author, image } = req.body;
 
-  const sql = 'UPDATE books SET title = ?, author = ? WHERE id = ?';
-  db.query(sql, [title, author, id], (err, result) => {
+  const sql = 'UPDATE books SET title = ?, author = ?, image = ? WHERE id = ?';
+  db.query(sql, [title, author, image,  id], (err, result) => {
     if (err) return res.status(500).send(err);
     res.send('Book updated');
   });

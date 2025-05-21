@@ -1,10 +1,11 @@
 const bcrypt = require("bcrypt"); 
+const jwt = require("jsonwebtoken");
 const db = require("../config/db")
 const userController = {}
 
 userController.logInUser = (req,res)=>{
-    const {name, password } = req.body;
-    db.query("SELECT * from users where name = ?",[name],async(err,results)=>{
+    const {email, password } = req.body;
+    db.query("SELECT * from users where email = ?",[email],async(err,results)=>{
         if(err) return res.status(500).send(err)
         
         if(results.length===0) return res.status(400).send("There´s no users.")
@@ -15,13 +16,14 @@ userController.logInUser = (req,res)=>{
             return res.status(401).json({ message: 'Incorrect password' });
         }
         const token = jwt.sign(
-        { id: user.id, name: user.name },
+        { id: results.id, name: results.name },
         process.env.JWT_SECRET,        
         { expiresIn: '1h' }
 );
 
         return res.status(200).json({
             message: "Login successful",
+            role:results[0].role,
             token
         });
     })
